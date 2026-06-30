@@ -1,34 +1,43 @@
-# 📊 Sales BI Auto-Insights
+# 📊 Sales BI Auto-Insights (Flask)  ✅
 
-> Jogue um **CSV de vendas** e receba um **dashboard** + **insights automáticos**
-> em texto (tendências, anomalias, top produtos/clientes).
+> Um BI que **escreve os próprios achados**. Recebe uma base de vendas (já vem
+> uma **fictícia carregada**, 18 meses × categoria × região × canal) e gera
+> automaticamente os **"Principais achados"** em texto — tendência, melhor/pior
+> mês, categoria líder, o que está **em ascensão/retração**, região destaque,
+> mudança de canal e **picos de demanda** — além de KPIs e gráficos.
 
-**Categoria:** Finanças/Dados · **Skills:** Ciência de Dados · (opcional) IA
-**Stack sugerida:** Python · pandas · Plotly · Streamlit · (opcional) Claude para narrativa
+**Skills:** Ciência de Dados · BI / storytelling de dados · Flask
+**Stack:** Python 3.12 · Flask · **só biblioteca padrão** (sem pandas/numpy)
 
-## 🎯 Objetivo
-Transformar dados brutos de vendas em um relatório executivo automático:
-detecção de tipos de coluna, KPIs (faturamento, ticket médio, crescimento),
-sazonalidade, e um resumo em linguagem natural dos achados.
+## 🏁 Como executar
+**Duplo clique em `EXECUTAR.bat`** ou `pip install -r requirements-dev.txt` +
+`python app.py`. Abre em **http://localhost:5006**. Abre e usa — **não precisa
+subir CSV**.
 
-## 💼 Valor para o portfólio
-Mostra **BI/analytics de ponta a ponta** e geração de insight — exatamente o que
-áreas de negócio pedem. Reaproveitável em qualquer empresa.
-
-## ✨ Funcionalidades (MVP)
-- Upload de CSV; perfil automático das colunas (datas, categóricas, numéricas).
-- KPIs + gráficos (vendas no tempo, por produto/região/cliente).
-- "Insights" automáticos: maiores variações, outliers, concentração (Pareto).
+## ✨ O que faz
+- **Achados automáticos** (motor de regras de análise): lê os dados e descreve em
+  linguagem natural o que está acontecendo no negócio.
+- **KPIs**: faturamento total, média mensal, **crescimento no período**,
+  categoria e região líderes.
+- **Gráficos** (sem dependências): faturamento por mês, por categoria, por
+  região e por canal.
+- **Série mensal** em tabela.
 
 ## 🧱 Arquitetura
-- `profiling` (tipos/qualidade), `metrics` (KPIs), `insights` (regras +
-  estatística; LLM opcional para texto), `dashboard` (Streamlit).
+```
+sales-bi-autoinsights/
+├── app.py                 # rota Flask (dashboard)
+├── src/salesbi/
+│   ├── data.py            # vendas sintéticas (tendência + sazonalidade)
+│   └── insights.py        # agregações + motor de achados automáticos
+├── templates/  static/    # UI (tema BI claro, gráficos em CSS)
+└── tests/                 # dados e motor de insights (5 testes)
+```
 
-## 🗺️ Roadmap
-- [ ] MVP: perfil + KPIs + gráficos + insights por regras.
-- [ ] V2: narrativa por LLM e previsão de vendas.
-- [ ] V3: comparação entre períodos e export PDF do relatório.
+## 🧪 Testes
+`pytest` — base determinística e somas consistentes, líderes corretos
+(Eletrônicos / Sudeste), tendência de alta e narrativa não vazia.
 
-## 🔗 Relação com outros projetos
-- É a "ponte" para o **doc-intelligence** (#15): mesma ideia de resumo
-  automático, aqui focada em dados tabulares de vendas.
+## 🗺️ Próximos
+- Permitir **subir um CSV** próprio (mesmo motor de insights por cima).
+- Comparação período a período e export do relatório em PDF.

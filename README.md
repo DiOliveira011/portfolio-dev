@@ -58,7 +58,7 @@ e abre o app no navegador. Para abrir os quatro de uma vez, use o
 | 6 | [finance-dashboard](./finance-dashboard) ✅ | Dashboard de finanças com categorização por ML | Data · Dev |
 | 7 | [invest-portfolio-analyzer](./invest-portfolio-analyzer) ✅ | Risco/retorno + fronteira eficiente (Monte Carlo) | Data |
 | 8 | [nfe-invoice-extractor](./nfe-invoice-extractor) ✅ | **(Flask)** extrai e valida NF-e (XML) + export CSV | Dev |
-| 9 | [sales-bi-autoinsights](./sales-bi-autoinsights) | CSV de vendas → dashboard + insights | Data |
+| 9 | [sales-bi-autoinsights](./sales-bi-autoinsights) ✅ | **(Flask)** BI que escreve os próprios achados (dados embutidos) | Data |
 | 10 | [churn-predictor](./churn-predictor) ✅ | **(Flask)** case de evasão: base fictícia, modelo, painel de risco + simulador | Data · IA |
 
 ### 🚚 Empresarial / Logística
@@ -88,11 +88,13 @@ fictícia de eventos & locação** (FestPro), já cheio de dados realistas e com
 dezenas de KPIs. **Não é "importe um CSV"** — abre e usa, como software de verdade.
 
 ## ✅ Progresso
-**12 apps implementados e verificados** (lint + testes + boot):
+**13 apps implementados e verificados** (lint + testes + boot):
 - 🃏 `mtg-deck-lab` — **(Flask)** analisador de Commander: lista/link, brackets,
   curva, preço, **câmera no celular**.
 - 🗣️ `text-to-sql-analyst` — **(Flask)** pergunte ao banco em PT → gera/executa
   SQL com segurança (regras offline + Claude opcional).
+- 📊 `sales-bi-autoinsights` — **(Flask)** BI que escreve os próprios achados a
+  partir de dados embutidos (KPIs + gráficos + narrativa).
 - 🤖 `ml-model-api-template` — **(FastAPI)** treina e serve um modelo (/predict,
   /docs Swagger, Docker) — base de MLOps reutilizável.
 - 📉 `churn-predictor` — **(Flask)** case de evasão: base fictícia + modelo +

@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Visão de vendas — últimos {{ kpis.meses }} meses</h1>
+
+<div class="kpis">
+  <div class="kpi"><span>Faturamento total</span><b>{{ fmt_brl(kpis.total) }}</b></div>
+  <div class="kpi"><span>Média mensal</span><b>{{ fmt_brl(kpis.media_mensal) }}</b></div>
+  <div class="kpi {{ 'up' if kpis.crescimento>=0 else 'down' }}">
+    <span>Crescimento no período</span><b>{{ "%+.1f"|format(kpis.crescimento*100) }}%</b></div>
+  <div class="kpi"><span>Categoria líder</span><b>{{ kpis.categoria_lider }}</b></div>
+  <div class="kpi"><span>Região líder</span><b>{{ kpis.regiao_lider }}</b></div>
+</div>
+
+<div class="card insights">
+  <h3>🔎 Principais achados <small>(gerados automaticamente)</small></h3>
+  <ul>
+    {% for i in insights %}<li>{{ i }}</li>{% endfor %}
+  </ul>
+</div>
+
+<div class="card">
+  <h3>Faturamento por mês</h3>
+  <div class="months">
+    {% for mes, val in series %}
+    <div class="mcol" title="{{ mes }}: {{ fmt_brl(val) }}">
+      <i style="height: {{ (val / max_mes * 100)|round(0,'floor') }}%"></i>
+      <span>{{ mes[5:] }}</span>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+
+<div class="two-col">
+  {% for titulo, bloco in [("Por categoria", por_categoria), ("Por região", por_regiao), ("Por canal", por_canal)] %}
+  <div class="card">
+    <h3>{{ titulo }}</h3>
+    <ul class="bars">
+      {% for nome, val in bloco.itens.items() %}
+      <li>
+        <span class="lbl">{{ nome }}</span>
+        <span class="bar"><i style="width: {{ (val / bloco.max * 100)|round(0,'floor') }}%"></i></span>
+        <span class="val">{{ fmt_brl(val) }}</span>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+  {% endfor %}
+</div>
+
+<div class="card">
+  <h3>Série mensal</h3>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Mês</th><th class="r">Faturamento</th></tr></thead>
+      <tbody>
+        {% for mes, val in series %}
+        <tr><td>{{ mes }}</td><td class="r">{{ fmt_brl(val) }}</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}
