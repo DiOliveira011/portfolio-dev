@@ -43,7 +43,7 @@ e abre o app no navegador. Para abrir os quatro de uma vez, use o
 | # | Projeto | O que é | Skills |
 |---|---------|---------|--------|
 | 1 | [mtg-deck-lab](./mtg-deck-lab) ✅ | Analisador **Commander** (Flask): cole lista/link, brackets (1–5), curva, preço + **câmera no celular** | Dev |
-| 2 | [mtg-card-vision](./mtg-card-vision) | Reconhece cartas por foto (visão computacional) | IA |
+| 2 | [mtg-card-vision](./mtg-card-vision) ⏳ | Reconhece cartas por foto (visão) — *adiado (ideia futura)* | IA |
 | 3 | [rpg-character-forge](./rpg-character-forge) ✅ | **(Flask)** fichas D&D 5e (forjar/aleatório, imprimível) | Dev |
 | 4 | [ai-dungeon-master](./ai-dungeon-master) ✅ | **(Flask)** Mestre de RPG com memória (Groq/Claude/offline d20) | IA |
 
@@ -88,8 +88,9 @@ fictícia de eventos & locação** (FestPro), já cheio de dados realistas e com
 dezenas de KPIs. **Não é "importe um CSV"** — abre e usa, como software de verdade.
 
 ## ✅ Progresso
-**16 de 17 apps implementados e verificados** (lint + testes + boot) — só falta o
-`mtg-card-vision` (visão computacional):
+**16 apps implementados e verificados** (lint + testes + boot). O
+`mtg-card-vision` (reconhecer carta por foto) ficou como **ideia futura**, a
+pedido — o `mtg-deck-lab` já oferece câmera no celular:
 - 🃏 `mtg-deck-lab` — **(Flask)** analisador de Commander: lista/link, brackets,
   curva, preço, **câmera no celular**.
 - 📄 `doc-intelligence` — **(Flask)** lê TXT/CSV/PDF/Excel, extrai estatísticas e

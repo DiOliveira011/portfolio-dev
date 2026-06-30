@@ -317,3 +317,9 @@ console.groq.com) **ou** `ANTHROPIC_API_KEY` antes de abrir o app. Nada muda no
 código — o badge no topo passa de "Offline" para o provedor ativo.
 
 > Fim da sessão 6 (16 apps no ar; IA com Groq/Claude/offline).
+
+**Decisão de fechamento:** a seu pedido, o `mtg-card-vision` (reconhecer carta
+por foto) fica como **ideia futura** — não foi construído. Motivo prático: visão
+confiável exige modelo multimodal (com chave) ou hashing perceptual contra base
+de imagens, e o `mtg-deck-lab` já entrega câmera no celular + busca por nome.
+Portfólio encerrado com **16 apps** prontos, testados e no Git.
