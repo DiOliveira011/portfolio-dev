@@ -1,0 +1,4 @@
+# RAG Knowledge Assistant (Flask) - runtime (Python 3.12+)
+Flask>=3.0
+# IA é opcional: defina GROQ_API_KEY (grátis) ou ANTHROPIC_API_KEY.
+# As chamadas usam urllib (stdlib) — nenhum SDK extra é necessário.

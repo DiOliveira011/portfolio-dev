@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="hero">
+  <h1>Pergunte à base de conhecimento da <span class="accent">{{ company }}</span></h1>
+  <p>Tire dúvidas de RH e TI em linguagem natural. O assistente <b>busca</b> os
+     trechos certos (RAG) e <b>responde</b> com a IA — citando as fontes. Sem IA
+     configurada, ele mostra os trechos mais relevantes.</p>
+</section>
+
+<form class="ask" method="post" action="{{ url_for('perguntar') }}">
+  <input type="text" name="question" value="{{ question }}" autofocus
+         placeholder="Ex.: quantos dias de férias eu tenho?">
+  <button class="btn" type="submit">Perguntar</button>
+</form>
+
+<div class="chips">
+  {% for s in suggestions %}
+  <a class="chip" href="{{ url_for('perguntar', q=s) }}">{{ s }}</a>
+  {% endfor %}
+</div>
+
+{% if result %}
+<div class="answer">
+  <div class="bubble">
+    <div class="who">Assistente <span class="via">· {{ result.provider }}</span></div>
+    <p class="text">{{ result.answer }}</p>
+  </div>
+  {% if result.sources %}
+  <div class="sources">
+    <h4>Fontes</h4>
+    {% for s in result.sources %}
+    <details class="source">
+      <summary>{{ s.title }} <span class="score">relevância {{ s.score }}</span></summary>
+      <p>{{ s.text }}</p>
+    </details>
+    {% endfor %}
+  </div>
+  {% endif %}
+</div>
+{% endif %}
+
+<details class="kb">
+  <summary>📂 O que há na base ({{ docs|length }} documentos)</summary>
+  <ul>{% for d in docs %}<li>{{ d }}</li>{% endfor %}</ul>
+</details>
+{% endblock %}

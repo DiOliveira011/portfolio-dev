@@ -1,0 +1,50 @@
+:root{
+  --bg:#f4f5fb; --panel:#ffffff; --ink:#1b2138; --muted:#6b7396; --line:#e2e5f2;
+  --indigo:#5b6cf0; --indigo-d:#4348c7; --green:#16a34a; --amber:#d97706; --radius:13px;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font-family:"Segoe UI",system-ui,Arial,sans-serif;line-height:1.5}
+.container{max-width:880px;margin:0 auto;padding:18px}
+h1{font-size:1.45rem;margin:.3em 0}
+.accent{color:var(--indigo-d)}
+
+.topbar{display:flex;align-items:center;justify-content:space-between;gap:12px;
+  padding:13px 20px;background:#1b2138;color:#eef0fb}
+.brand{font-weight:800}.brand small{color:#aab2dd;font-weight:500}
+.mode{font-size:.76rem;padding:5px 11px;border-radius:999px;font-weight:700}
+.mode.on{background:#0c3b22;color:#86efac}
+.mode.off{background:#3a2c08;color:#fcd34d}
+
+.hero p{color:var(--muted)}
+.ask{display:flex;gap:10px;margin:14px 0}
+.ask input{flex:1;background:#fff;border:1px solid var(--line);border-radius:11px;
+  padding:13px;font-size:1.02rem;color:var(--ink)}
+.ask input:focus{outline:2px solid var(--indigo);border-color:transparent}
+.btn{background:var(--indigo-d);color:#fff;border:none;font-weight:700;padding:0 20px;
+  border-radius:11px;cursor:pointer;font-size:1rem}
+.btn:hover{background:var(--indigo)}
+
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:8px}
+.chip{background:#fff;border:1px solid var(--line);color:#414a78;padding:7px 12px;
+  border-radius:999px;font-size:.85rem}
+.chip:hover{border-color:var(--indigo);color:var(--indigo-d)}
+
+.answer{margin:16px 0}
+.bubble{background:var(--panel);border:1px solid var(--line);border-left:4px solid var(--indigo);
+  border-radius:12px;padding:14px 16px;box-shadow:0 1px 2px #1b21380a}
+.who{font-weight:700;color:var(--indigo-d);font-size:.9rem;margin-bottom:4px}
+.via{color:var(--muted);font-weight:500;font-size:.8rem}
+.text{white-space:pre-wrap;margin:.2em 0}
+
+.sources{margin-top:12px}
+.sources h4{margin:.4em 0;color:var(--muted);font-size:.82rem;text-transform:uppercase;letter-spacing:.04em}
+.source{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:8px 12px;margin:6px 0}
+.source summary{cursor:pointer;font-weight:600}
+.source .score{color:var(--muted);font-weight:500;font-size:.78rem;margin-left:6px}
+.source p{color:#3a4264;margin:.6em 0 .2em}
+
+.kb{margin-top:20px;color:var(--muted)}
+.kb summary{cursor:pointer;padding:8px 0}
+.kb ul{columns:2}
+@media(max-width:560px){.kb ul{columns:1}}
