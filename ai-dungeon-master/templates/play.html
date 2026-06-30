@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="camp-head">
+  <div>
+    <h1>{{ camp.scenario }}</h1>
+    <p class="hero-info">🛡️ {{ camp.character.nome }} · {{ camp.character.classe }}
+       · PV {{ camp.character.hp }}/{{ camp.character.hp_max }} · turno {{ camp.turn }}</p>
+  </div>
+  <form method="post" action="{{ url_for('encerrar') }}"
+        onsubmit="return confirm('Encerrar a campanha atual?')">
+    <button class="btn ghost" type="submit">Encerrar</button>
+  </form>
+</div>
+
+<div class="log">
+  {% for e in camp.log %}
+  <div class="entry {{ e.who }}">
+    <span class="who">{{ 'Mestre' if e.who == 'dm' else camp.character.nome }}</span>
+    <p>{{ e.text }}</p>
+  </div>
+  {% endfor %}
+  <span id="fim"></span>
+</div>
+
+<form class="action" method="post" action="{{ url_for('acao') }}">
+  <input type="text" name="action" autofocus autocomplete="off"
+         placeholder="O que você faz? Ex.: ataco o goblin com minha espada">
+  <button class="btn" type="submit">Agir</button>
+</form>
+
+<div class="quick">
+  {% for q in quick %}
+  <form method="post" action="{{ url_for('acao') }}" class="qf">
+    <input type="hidden" name="action" value="{{ q }}">
+    <button type="submit">{{ q }}</button>
+  </form>
+  {% endfor %}
+</div>
+{% endblock %}

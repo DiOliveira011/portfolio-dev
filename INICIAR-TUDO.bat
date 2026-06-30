@@ -20,5 +20,6 @@ start "Churn Predictor"      "%~dp0churn-predictor\EXECUTAR.bat"
 start "Text-to-SQL Analyst"  "%~dp0text-to-sql-analyst\EXECUTAR.bat"
 start "Sales BI Insights"    "%~dp0sales-bi-autoinsights\EXECUTAR.bat"
 start "RAG Assistant"        "%~dp0rag-knowledge-assistant\EXECUTAR.bat"
+start "AI Dungeon Master"    "%~dp0ai-dungeon-master\EXECUTAR.bat"
 echo Pronto. As janelas foram abertas.
 timeout /t 4 >nul

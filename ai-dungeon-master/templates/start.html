@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="hero">
+  <h1>Sua aventura começa agora</h1>
+  <p>Escolha um cenário, dê um nome ao herói e jogue. O Mestre narra e lembra do
+     que aconteceu (memória de campanha). Com IA (Groq/Claude) a história fica
+     viva; sem chave, um Mestre offline conduz a aventura com rolagens de d20.</p>
+</section>
+
+<form method="post" action="{{ url_for('nova') }}">
+  <label class="lbl">Nome do herói (opcional)</label>
+  <input class="nome" type="text" name="nome" placeholder="Deixe em branco para sortear">
+
+  <h3>Escolha o cenário</h3>
+  <div class="cards">
+    {% for c in cenarios %}
+    <label class="card">
+      <input type="radio" name="scenario" value="{{ c }}" {{ 'checked' if loop.first }}>
+      <span class="title">{{ c }}</span>
+    </label>
+    {% endfor %}
+  </div>
+
+  <button class="btn" type="submit">⚔️ Iniciar campanha</button>
+</form>
+{% endblock %}

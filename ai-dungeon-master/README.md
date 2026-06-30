@@ -1,33 +1,50 @@
-# 🐉 AI Dungeon Master
+# 🐉 AI Dungeon Master (Flask)  ✅
 
-> Um **Mestre de RPG com IA** que conduz aventuras de mesa (D&D / Daggerheart),
-> narra cenas, controla NPCs e **lembra** o que aconteceu na campanha.
+> Um **Mestre de RPG** que narra sua aventura de fantasia e **lembra do que
+> aconteceu** (memória de campanha). Escolha um cenário, dê nome ao herói e jogue
+> escrevendo o que faz. Com **IA (Groq grátis ou Claude)** a história fica viva;
+> **sem chave**, um Mestre offline conduz com rolagens de **d20**.
 
-**Categoria:** Mundo Nerd · **Skills:** Engenharia de IA (LLM, memória/RAG)
-**Stack sugerida:** Python · API da Claude (Anthropic) · SQLite/embeddings · CustomTkinter ou Discord bot
+**Skills:** Engenharia de IA (chat com memória/contexto) · design de sistema · Flask
+**Stack:** Python 3.12 · Flask · IA via **Groq/Claude** (urllib, sem SDK) · motor offline
 
-## 🎯 Objetivo
-Criar um mestre virtual que recebe as ações dos jogadores e responde com
-narração coerente, aplica rolagens de dados e mantém **estado de campanha**
-(personagens, lugares, missões) usando memória de longo prazo.
+## 🤖 IA opcional (Groq grátis, Claude, ou offline)
+Defina **uma** variável antes de abrir: `GROQ_API_KEY` (gratuito,
+https://console.groq.com) **ou** `ANTHROPIC_API_KEY` (Claude). Sem chave, o jogo
+roda com o Mestre offline (narração + d20). Com as duas, use `LLM_PROVIDER`.
 
-## 💼 Valor para o portfólio
-Mostra domínio de **LLMs aplicados**: engenharia de prompt, *tool use* (rolar
-dados, consultar regras), memória persistente e controle de contexto.
+## 🏁 Como executar
+**Duplo clique em `EXECUTAR.bat`** ou `pip install -r requirements-dev.txt` +
+`python app.py`. Abre em **http://localhost:5008** (e no celular pela rede).
 
-## ✨ Funcionalidades (MVP)
-- Conversa com o mestre por texto; narração + perguntas aos jogadores.
-- *Tool use*: rolar dados (d20 etc.) e aplicar resultados na narrativa.
-- Memória de campanha: resumos automáticos por sessão (evita estourar contexto).
+## ✨ O que faz
+- **3 cenários** prontos (Masmorra do Dragão, Taverna Amaldiçoada, Floresta dos
+  Sussurros) e **herói gerado** (classe, PV, inventário).
+- **Memória de campanha**: o histórico recente vai como contexto para a IA manter
+  a continuidade.
+- **Ações livres** (escreva o que quiser) + **botões rápidos** (investigar,
+  atacar, conversar, pegar, fugir).
+- **Modo offline**: classifica a ação e narra o desfecho com **rolagem de d20**.
 
 ## 🧱 Arquitetura
-- `llm` (cliente Claude + prompts + tools), `memory` (resumos + recuperação),
-  `game` (estado/personagens/dados), `ui` (chat). RAG sobre o histórico.
+```
+ai-dungeon-master/
+├── app.py                 # rotas Flask (/, /nova, /acao, /encerrar) + cookie
+├── src/dungeon/
+│   ├── scenarios.py       # cenários (flavor/contexto)
+│   ├── character.py       # geração de herói
+│   ├── engine.py          # Mestre offline (classificação + d20)
+│   ├── game.py            # campanha + memória + IA quando disponível
+│   ├── llm.py             # Groq / Claude / offline (via urllib)
+│   └── store.py           # campanhas em memória
+├── templates/  static/    # UI (tema RPG escuro/dourado)
+└── tests/                 # engine, jogo e provedores (10 testes)
+```
 
-## 🗺️ Roadmap
-- [ ] MVP: chat + rolagem de dados + memória por resumo.
-- [ ] V2: fichas dos jogadores e regras de combate por turnos.
-- [ ] V3: geração de mapas/imagens de cena e exportação do "diário de campanha".
+## 🧪 Testes
+`pytest` — classificação de ações, narração offline, criação/turnos da campanha e
+resolução de provedor (sem rede).
 
-## 📚 Notas de IA
-- Modelo padrão: Claude (Anthropic). Requer `ANTHROPIC_API_KEY`.
+## 🗺️ Próximos
+- Persistir campanhas em disco e permitir **continuar depois**.
+- Combate com PV/dano de verdade e fichas evoluindo (XP/itens).

@@ -45,7 +45,7 @@ e abre o app no navegador. Para abrir os quatro de uma vez, use o
 | 1 | [mtg-deck-lab](./mtg-deck-lab) ✅ | Analisador **Commander** (Flask): cole lista/link, brackets (1–5), curva, preço + **câmera no celular** | Dev |
 | 2 | [mtg-card-vision](./mtg-card-vision) | Reconhece cartas por foto (visão computacional) | IA |
 | 3 | [rpg-character-forge](./rpg-character-forge) ✅ | **(Flask)** fichas D&D 5e (forjar/aleatório, imprimível) | Dev |
-| 4 | [ai-dungeon-master](./ai-dungeon-master) | Mestre de RPG com IA + memória de campanha | IA |
+| 4 | [ai-dungeon-master](./ai-dungeon-master) ✅ | **(Flask)** Mestre de RPG com memória (Groq/Claude/offline d20) | IA |
 
 ### ⚽ Esportes / Dados
 | # | Projeto | O que é | Skills |
@@ -88,11 +88,13 @@ fictícia de eventos & locação** (FestPro), já cheio de dados realistas e com
 dezenas de KPIs. **Não é "importe um CSV"** — abre e usa, como software de verdade.
 
 ## ✅ Progresso
-**14 apps implementados e verificados** (lint + testes + boot):
+**15 apps implementados e verificados** (lint + testes + boot):
 - 🃏 `mtg-deck-lab` — **(Flask)** analisador de Commander: lista/link, brackets,
   curva, preço, **câmera no celular**.
 - 📚 `rag-knowledge-assistant` — **(Flask)** RAG sobre a base de uma empresa
   fictícia (TF-IDF) com IA opcional **Groq (grátis) / Claude** e modo offline.
+- 🐉 `ai-dungeon-master` — **(Flask)** Mestre de RPG com memória de campanha
+  (Groq/Claude) e Mestre offline com d20.
 - 🗣️ `text-to-sql-analyst` — **(Flask)** pergunte ao banco em PT → gera/executa
   SQL com segurança (regras offline + Claude opcional).
 - 📊 `sales-bi-autoinsights` — **(Flask)** BI que escreve os próprios achados a
