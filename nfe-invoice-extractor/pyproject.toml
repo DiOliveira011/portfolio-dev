@@ -1,0 +1,20 @@
+[project]
+name = "nfe-invoice-extractor"
+version = "1.0.0"
+description = "Extract and validate Brazilian NF-e invoices (XML) — Flask."
+requires-python = ">=3.12"
+dependencies = ["Flask>=3.0"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "N", "UP", "B", "C4", "SIM"]
+ignore = ["UP042"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+addopts = "-ra -q"

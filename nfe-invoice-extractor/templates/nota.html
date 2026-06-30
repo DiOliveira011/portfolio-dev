@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% block title %}NF-e {{ nfe.numero }} — {{ nfe.emitente.nome }}{% endblock %}
+{% block content %}
+
+<div class="note-head">
+  <div>
+    <h1>NF-e nº {{ nfe.numero }} <span class="serie">série {{ nfe.serie }}</span></h1>
+    <p class="muted">{{ nfe.natureza }} · emitida em {{ nfe.emissao }}</p>
+    <p class="chave">🔑 {{ nfe.chave }}</p>
+  </div>
+  <div class="badge {{ 'ok' if nfe.valido else 'warn' }}">
+    {{ '✓ Válida' if nfe.valido else '⚠ Verificar' }}
+  </div>
+</div>
+
+<div class="two-col">
+  <div class="card">
+    <h3>Emitente</h3>
+    <p class="big">{{ nfe.emitente.nome }}</p>
+    <p class="muted">CNPJ {{ nfe.emitente.cnpj }}</p>
+    <p class="muted">{{ nfe.emitente.municipio }}/{{ nfe.emitente.uf }}</p>
+  </div>
+  <div class="card">
+    <h3>Destinatário</h3>
+    <p class="big">{{ nfe.destinatario.nome }}</p>
+    <p class="muted">Doc {{ nfe.destinatario.doc }}</p>
+    <p class="muted">{{ nfe.destinatario.uf }}</p>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-head">
+    <h3>Itens ({{ nfe.itens|length }})</h3>
+    <form method="post" action="{{ url_for('exportar_csv') }}">
+      <input type="hidden" name="xml" value="{{ xml }}">
+      <button class="btn small" type="submit">⬇️ Exportar CSV</button>
+    </form>
+  </div>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Código</th><th>Descrição</th><th>NCM</th><th>CFOP</th>
+        <th class="r">Qtd</th><th class="r">Unit.</th><th class="r">Total</th></tr></thead>
+      <tbody>
+        {% for it in nfe.itens %}
+        <tr>
+          <td>{{ it.codigo }}</td><td>{{ it.descricao }}</td>
+          <td>{{ it.ncm }}</td><td>{{ it.cfop }}</td>
+          <td class="r">{{ "%.0f"|format(it.quantidade) }}</td>
+          <td class="r">R$ {{ "%.2f"|format(it.valor_unitario) }}</td>
+          <td class="r">R$ {{ "%.2f"|format(it.valor_total) }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="totais">
+  <div class="t"><span>Produtos</span><b>R$ {{ "%.2f"|format(nfe.totais.produtos) }}</b></div>
+  <div class="t"><span>ICMS</span><b>R$ {{ "%.2f"|format(nfe.totais.icms) }}</b></div>
+  <div class="t"><span>PIS</span><b>R$ {{ "%.2f"|format(nfe.totais.pis) }}</b></div>
+  <div class="t"><span>COFINS</span><b>R$ {{ "%.2f"|format(nfe.totais.cofins) }}</b></div>
+  <div class="t total"><span>Total da nota</span><b>R$ {{ "%.2f"|format(nfe.totais.nota) }}</b></div>
+</div>
+
+<div class="card">
+  <h3>Validações</h3>
+  <ul class="checks">
+    {% for v in nfe.validacoes %}
+    <li class="{{ 'ok' if v.ok else 'fail' }}">{{ '✓' if v.ok else '✕' }} {{ v.msg }}</li>
+    {% endfor %}
+  </ul>
+</div>
+
+<a class="btn ghost" href="{{ url_for('index') }}">← Nova extração</a>
+{% endblock %}

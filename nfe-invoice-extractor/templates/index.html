@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="hero">
+  <h1>Extraia dados de <span class="accent">NF-e</span> em segundos</h1>
+  <p>Envie o <b>XML</b> da nota fiscal eletrônica e veja emitente, destinatário,
+     itens, impostos e totais — com <b>validações automáticas</b> e exportação CSV.</p>
+</section>
+
+{% if error %}<div class="alert">{{ error }}</div>{% endif %}
+
+<form class="card" method="post" action="{{ url_for('extrair') }}" enctype="multipart/form-data">
+  <label>Arquivo XML da NF-e</label>
+  <input type="file" name="arquivo" accept=".xml,text/xml">
+
+  <div class="or">— ou cole o conteúdo —</div>
+
+  <textarea name="xml_text" rows="8" placeholder="<nfeProc ...> ... </nfeProc>"></textarea>
+
+  <div class="actions">
+    <button class="btn" type="submit">🔎 Extrair dados</button>
+    <button class="btn ghost" type="submit" name="exemplo" value="1">Usar exemplo</button>
+  </div>
+</form>
+
+<p class="muted small">Processamento 100% local — nada é enviado para fora do seu computador.</p>
+{% endblock %}

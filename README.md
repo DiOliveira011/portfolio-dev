@@ -57,7 +57,7 @@ e abre o app no navegador. Para abrir os quatro de uma vez, use o
 |---|---------|---------|--------|
 | 6 | [finance-dashboard](./finance-dashboard) ✅ | Dashboard de finanças com categorização por ML | Data · Dev |
 | 7 | [invest-portfolio-analyzer](./invest-portfolio-analyzer) ✅ | Risco/retorno + fronteira eficiente (Monte Carlo) | Data |
-| 8 | [nfe-invoice-extractor](./nfe-invoice-extractor) | Extrai e valida NF-e (PDF/XML) | Dev · IA |
+| 8 | [nfe-invoice-extractor](./nfe-invoice-extractor) ✅ | **(Flask)** extrai e valida NF-e (XML) + export CSV | Dev |
 | 9 | [sales-bi-autoinsights](./sales-bi-autoinsights) | CSV de vendas → dashboard + insights | Data |
 | 10 | [churn-predictor](./churn-predictor) | Prevê evasão de clientes + API (MLOps) | Data · IA |
 
@@ -88,9 +88,10 @@ fictícia de eventos & locação** (FestPro), já cheio de dados realistas e com
 dezenas de KPIs. **Não é "importe um CSV"** — abre e usa, como software de verdade.
 
 ## ✅ Progresso
-**8 apps implementados e verificados** (lint + testes + boot):
+**9 apps implementados e verificados** (lint + testes + boot):
 - 🃏 `mtg-deck-lab` — **(Flask)** analisador de Commander: lista/link, brackets,
   curva, preço, **câmera no celular**.
+- 🧾 `nfe-invoice-extractor` — **(Flask)** lê NF-e (XML), valida e exporta itens em CSV.
 - ⚔️ `rpg-character-forge` — **(Flask)** fichas de D&D 5e (forjar/aleatório, imprimível).
 - 🚚 `gestao-entregas` — **(Flask)** gestão operacional de entregas (cadastro,
   baixa com conferente, SLA com feriados, auditoria).
