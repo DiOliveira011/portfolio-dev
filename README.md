@@ -24,6 +24,7 @@ projeto independente, com `README` próprio e — conforme implementamos — có
 testes e instruções. Cada app usa uma **paleta de cores diferente** (variedade).
 
 > 📌 Decisões de projeto registradas em **[DECISIONS.md](./DECISIONS.md)**.
+> 📄 Resumo de todos os projetos em Word: **[Portfolio - Resumo dos Projetos.docx](./Portfolio%20-%20Resumo%20dos%20Projetos.docx)**.
 
 ## ▶️ Como executar (1 clique)
 
@@ -74,6 +75,11 @@ e abre o app no navegador. Para abrir os quatro de uma vez, use o
 | 13 | [text-to-sql-analyst](./text-to-sql-analyst) ✅ | **(Flask)** pergunte em PT → gera SQL, executa (regras + Claude opcional) | IA · Data |
 | 14 | [ml-model-api-template](./ml-model-api-template) ✅ | **(FastAPI)** modelo + `/predict` + Docker (base MLOps) | IA · Dev |
 | 15 | [doc-intelligence](./doc-intelligence) ✅ | **(Flask)** lê TXT/CSV/PDF/Excel, resume (Groq/Claude/extrativo) | IA · Data |
+
+### 🛠️ Utilitários (desktop)
+| Projeto | O que é | Skills |
+|---|---------|--------|
+| [presence-keeper](./presence-keeper) ✅ | App Windows que **mantém a sessão ativa** (tela ligada + evita "ausente") usando Win32 API + Tkinter | Dev |
 
 ### 🧊 Backlog (depois)
 | Projeto | O que é |
