@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}Meus personagens{% endblock %}
+{% block content %}
+<h1>Meus personagens</h1>
+{% if not chars %}
+  <p class="muted">Nenhum personagem salvo ainda.
+     <a href="{{ url_for('index') }}">Forje o primeiro!</a></p>
+{% else %}
+<div class="char-list">
+  {% for ch in chars %}
+  <a class="card char" href="{{ url_for('personagem', char_id=ch.id) }}">
+    <div class="lvl">{{ ch.summary.level }}</div>
+    <div class="grow">
+      <h3>{{ ch.summary.name }}</h3>
+      <span class="muted">{{ ch.summary.race }} · {{ ch.summary.klass }}</span>
+    </div>
+    <span class="go">abrir →</span>
+  </a>
+  {% endfor %}
+</div>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="hero">
+  <h1>Forje seu personagem de <span class="accent">D&amp;D 5e</span></h1>
+  <p>Escolha raça, classe e atributos — a ficha sai pronta (modificadores, PV, CA,
+     testes de resistência e perícias). Ou <a href="{{ url_for('aleatorio') }}">role um aleatório</a>.</p>
+</section>
+
+{% if error %}<div class="alert">{{ error }}</div>{% endif %}
+
+<form class="card" method="post" action="{{ url_for('forjar') }}">
+  <div class="grid">
+    <div class="span2">
+      <label>Nome</label>
+      <input type="text" name="name" placeholder="Nome do(a) herói(na)">
+    </div>
+    <div>
+      <label>Raça</label>
+      <select name="race">
+        {% for r, info in RACES.items() %}<option value="{{ r }}">{{ r }}</option>{% endfor %}
+      </select>
+    </div>
+    <div>
+      <label>Classe</label>
+      <select name="klass">
+        {% for k in CLASSES %}<option value="{{ k }}">{{ k }}</option>{% endfor %}
+      </select>
+    </div>
+    <div>
+      <label>Nível</label>
+      <input type="number" name="level" min="1" max="20" value="1">
+    </div>
+  </div>
+
+  <h3>Atributos</h3>
+  <p class="hint">Sugestão (array padrão): {{ array|join(", ") }}. Ajuste à vontade.</p>
+  <div class="abilities">
+    {% for ab in ABILITIES %}
+    <div class="ab-input">
+      <label>{{ ab }}<small>{{ ABILITY_NAMES[ab] }}</small></label>
+      <input type="number" name="{{ ab }}" min="1" max="20" value="{{ defaults[ab] }}">
+    </div>
+    {% endfor %}
+  </div>
+
+  <div class="actions">
+    <button class="btn" type="submit">⚒️ Forjar ficha</button>
+    <a class="btn ghost" href="{{ url_for('aleatorio') }}">🎲 Aleatório</a>
+  </div>
+</form>
+{% endblock %}

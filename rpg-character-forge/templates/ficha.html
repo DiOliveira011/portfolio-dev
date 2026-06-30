@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+{% block title %}{{ c.name }} — Ficha{% endblock %}
+{% block content %}
+
+<div class="sheet">
+  <div class="sheet-head">
+    <div>
+      <h1>{{ c.name }}</h1>
+      <p class="sub">{{ c.race }} · {{ c.klass }} · Nível {{ c.level }}</p>
+      <p class="trait">✨ {{ c.trait }}</p>
+    </div>
+    <div class="noprint head-actions">
+      <button class="btn" onclick="window.print()">🖨️ Imprimir / PDF</button>
+    </div>
+  </div>
+
+  <div class="abilities-grid">
+    {% for ab in ABILITIES %}
+    <div class="ab {{ 'primary' if ab == c.primary }}">
+      <div class="ab-name">{{ ab }}</div>
+      <div class="ab-mod">{{ signed(c.mods[ab]) }}</div>
+      <div class="ab-score">{{ c.scores[ab] }}</div>
+    </div>
+    {% endfor %}
+  </div>
+
+  <div class="combat">
+    <div class="stat"><b>{{ c.hp }}</b><span>Pontos de Vida (d{{ c.hit_die }})</span></div>
+    <div class="stat"><b>{{ c.ac }}</b><span>Classe de Armadura</span></div>
+    <div class="stat"><b>{{ signed(c.initiative) }}</b><span>Iniciativa</span></div>
+    <div class="stat"><b>{{ c.speed }} m</b><span>Deslocamento</span></div>
+    <div class="stat"><b>{{ signed(c.prof) }}</b><span>Proficiência</span></div>
+    <div class="stat"><b>{{ c.passive_perception }}</b><span>Percepção passiva</span></div>
+  </div>
+
+  <div class="two-col">
+    <div class="card">
+      <h3>Testes de Resistência</h3>
+      <ul class="rows">
+        {% for s in c.saves %}
+        <li class="{{ 'on' if s.proficient }}">
+          <span class="dot"></span>{{ ABILITY_NAMES[s.ability] }}
+          <b>{{ signed(s.value) }}</b>
+        </li>{% endfor %}
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Perícias</h3>
+      <ul class="rows skills">
+        {% for s in c.skills %}
+        <li class="{{ 'on' if s.proficient }}">
+          <span class="dot"></span>{{ s.skill }} <small>({{ s.ability }})</small>
+          <b>{{ signed(s.value) }}</b>
+        </li>{% endfor %}
+      </ul>
+    </div>
+  </div>
+
+  <div class="noprint save-bar">
+    <form method="post" action="{{ url_for('salvar') }}">
+      <input type="hidden" name="name" value="{{ c.name }}">
+      <input type="hidden" name="race" value="{{ inputs.race }}">
+      <input type="hidden" name="klass" value="{{ inputs.klass }}">
+      <input type="hidden" name="level" value="{{ inputs.level }}">
+      {% for ab in ABILITIES %}<input type="hidden" name="{{ ab }}" value="{{ inputs.base_scores[ab] }}">{% endfor %}
+      {% for sk in inputs.chosen_skills or [] %}<input type="hidden" name="skills" value="{{ sk }}">{% endfor %}
+      {% if not saved_id %}<button class="btn" type="submit">💾 Salvar personagem</button>{% endif %}
+    </form>
+    {% if saved_id %}
+    <form method="post" action="{{ url_for('excluir', char_id=saved_id) }}"
+          onsubmit="return confirm('Excluir este personagem?')">
+      <button class="btn danger" type="submit">Excluir</button>
+    </form>
+    {% endif %}
+    <a class="btn ghost" href="{{ url_for('index') }}">Forjar outro</a>
+  </div>
+</div>
+{% endblock %}

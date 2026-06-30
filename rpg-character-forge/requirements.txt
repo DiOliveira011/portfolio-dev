@@ -1,0 +1,2 @@
+# RPG Character Forge (Flask) - runtime dependencies (Python 3.12+)
+Flask>=3.0

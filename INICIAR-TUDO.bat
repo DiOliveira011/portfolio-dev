@@ -13,5 +13,6 @@ start "World Cup Predictor"  "%~dp0worldcup-predictor\EXECUTAR.bat"
 start "Logistics Control"    "%~dp0logistics-control\EXECUTAR.bat"
 start "Invest Analyzer"      "%~dp0invest-portfolio-analyzer\EXECUTAR.bat"
 start "Gestao de Entregas"   "%~dp0gestao-entregas\EXECUTAR.bat"
+start "RPG Character Forge"  "%~dp0rpg-character-forge\EXECUTAR.bat"
 echo Pronto. As janelas foram abertas.
 timeout /t 4 >nul
