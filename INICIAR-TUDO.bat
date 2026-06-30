@@ -17,5 +17,6 @@ start "RPG Character Forge"  "%~dp0rpg-character-forge\EXECUTAR.bat"
 start "NF-e Extractor"       "%~dp0nfe-invoice-extractor\EXECUTAR.bat"
 start "ML Model API"         "%~dp0ml-model-api-template\EXECUTAR.bat"
 start "Churn Predictor"      "%~dp0churn-predictor\EXECUTAR.bat"
+start "Text-to-SQL Analyst"  "%~dp0text-to-sql-analyst\EXECUTAR.bat"
 echo Pronto. As janelas foram abertas.
 timeout /t 4 >nul

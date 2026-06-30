@@ -1,0 +1,4 @@
+# Text-to-SQL Analyst (Flask) - runtime (Python 3.12+)
+Flask>=3.0
+# Opcional: habilita o modo IA (Claude). O app funciona sem isso (modo regras).
+anthropic>=0.39

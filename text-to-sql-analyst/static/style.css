@@ -1,0 +1,53 @@
+:root{
+  --bg:#0b1020; --panel:#121a30; --ink:#e6edf6; --muted:#93a0bd; --line:#243151;
+  --cyan:#22d3ee; --cyan-d:#0891b2; --green:#34d399; --amber:#fbbf24; --radius:12px;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font-family:"Segoe UI",system-ui,Arial,sans-serif;line-height:1.5;min-height:100vh}
+a{color:var(--cyan)}
+.container{max-width:940px;margin:0 auto;padding:18px}
+h1{font-size:1.5rem;margin:.3em 0}
+.accent{color:var(--cyan)}
+
+.topbar{display:flex;align-items:center;justify-content:space-between;gap:12px;
+  padding:12px 20px;background:#0e1426;border-bottom:1px solid var(--line)}
+.brand{color:#fff;font-weight:800}
+.mode{font-size:.78rem;padding:5px 11px;border-radius:999px;font-weight:700}
+.mode.on{background:#06371f;color:var(--green)}
+.mode.off{background:#3a2c08;color:var(--amber)}
+
+.hero p{color:var(--muted)}
+.ask{display:flex;gap:10px;margin:14px 0}
+.ask input{flex:1;background:#0c1326;border:1px solid var(--line);border-radius:11px;
+  padding:13px;color:var(--ink);font-size:1.02rem}
+.ask input:focus{outline:2px solid var(--cyan-d);border-color:transparent}
+.btn{background:var(--cyan-d);color:#fff;border:none;font-weight:700;padding:0 20px;
+  border-radius:11px;cursor:pointer;font-size:1rem}
+.btn:hover{background:var(--cyan)}
+
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
+.chip{background:#13203c;border:1px solid var(--line);color:#bcd;padding:7px 12px;
+  border-radius:999px;font-size:.86rem}
+.chip:hover{border-color:var(--cyan-d);color:#fff}
+
+.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:16px;margin:14px 0}
+.result-head{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.result-head h3{margin:.1em 0}
+.src{color:var(--muted);font-size:.78rem;font-weight:600}
+.rows-n{color:var(--muted);font-size:.82rem}
+.sql{background:#0a1226;border:1px solid var(--line);border-radius:9px;
+  padding:11px;overflow-x:auto;margin:10px 0}
+.sql code{font-family:ui-monospace,Consolas,monospace;color:#a5f3fc;font-size:.88rem;white-space:pre-wrap}
+
+.table-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:.92rem}
+th,td{padding:8px 10px;border-bottom:1px solid var(--line);text-align:left;white-space:nowrap}
+th{color:var(--muted);font-size:.74rem;text-transform:uppercase;letter-spacing:.03em}
+tbody tr:hover{background:#0e1733}
+
+.alert{background:#3a1414;border:1px solid #6b2b2b;color:#fecaca;padding:12px 14px;border-radius:10px;margin:14px 0}
+.schema{margin-top:18px;color:var(--muted)}
+.schema summary{cursor:pointer;padding:8px 0}
+.schema pre{background:var(--panel);border:1px solid var(--line);border-radius:9px;padding:12px;
+  white-space:pre-wrap;color:#cdd7ee}

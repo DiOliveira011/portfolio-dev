@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="hero">
+  <h1>Pergunte ao banco em <span class="accent">português</span></h1>
+  <p>Uma base de vendas fictícia ({{ stats.vendas }} vendas, {{ stats.clientes }} clientes,
+     {{ stats.produtos }} produtos). Escreva a pergunta — o app gera o <b>SQL</b>, executa e
+     mostra o resultado. Só consultas de leitura (SELECT) são permitidas.</p>
+</section>
+
+<form class="ask" method="post" action="{{ url_for('perguntar') }}">
+  <input type="text" name="question" value="{{ question }}" autofocus
+         placeholder="Ex.: faturamento por mês, top produtos, vendas por região...">
+  <button class="btn" type="submit">Perguntar</button>
+</form>
+
+<div class="chips">
+  {% for s in suggestions %}
+  <a class="chip" href="{{ url_for('perguntar', q=s) }}">{{ s }}</a>
+  {% endfor %}
+</div>
+
+{% if result %}
+  {% if result.ok %}
+  <div class="card">
+    <div class="result-head">
+      <h3>Resultado <span class="src">via {{ result.source }}</span></h3>
+      <span class="rows-n">{{ result.rows|length }} linha(s)</span>
+    </div>
+    <pre class="sql"><code>{{ result.sql }}</code></pre>
+    <div class="table-wrap">
+      <table>
+        <thead><tr>{% for c in result.columns %}<th>{{ c }}</th>{% endfor %}</tr></thead>
+        <tbody>
+          {% for row in result.rows %}
+          <tr>{% for cell in row %}<td>{{ cell }}</td>{% endfor %}</tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+  {% else %}
+  <div class="alert">
+    ⚠ {{ result.error }}
+    {% if result.sql %}<pre class="sql"><code>{{ result.sql }}</code></pre>{% endif %}
+  </div>
+  {% endif %}
+{% endif %}
+
+<details class="schema">
+  <summary>📚 Esquema do banco</summary>
+  <pre>{{ schema }}</pre>
+</details>
+{% endblock %}

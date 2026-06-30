@@ -1,34 +1,48 @@
-# 🗣️➡️🗄️ Text-to-SQL Analyst
+# 🗣️➡️🗃️ Text-to-SQL Analyst (Flask)  ✅
 
-> Pergunte **em português** ("qual o faturamento por mês em 2024?") e a IA gera o
-> SQL, executa no banco e responde com tabela e gráfico.
+> Pergunte a um **banco de dados em português** e o app **gera o SQL, executa e
+> mostra o resultado**. Vem com uma **base de vendas fictícia** já populada
+> (SQLite em memória). Funciona **offline** (motor de regras) e usa **Claude**
+> automaticamente se você definir `ANTHROPIC_API_KEY`. Só executa **SELECT**
+> (somente leitura) — com guarda de segurança contra escrita/injeção.
 
-**Categoria:** Engenharia de IA · **Skills:** IA (LLM + tool use) · Ciência de Dados
-**Stack sugerida:** Python · API da Claude · SQLite/DuckDB · pandas · Plotly · Streamlit
+**Skills:** Engenharia de IA · SQL/bancos de dados · segurança · Flask
+**Stack:** Python 3.12 · Flask · sqlite3 (stdlib) · `anthropic` (opcional)
 
-## 🎯 Objetivo
-Um "analista virtual" que entende o **schema** do banco, traduz perguntas em
-**SQL seguro** (somente leitura), executa e apresenta o resultado com a
-visualização adequada e uma explicação.
+## 🏁 Como executar
+**Duplo clique em `EXECUTAR.bat`** ou `pip install -r requirements-dev.txt` +
+`python app.py`. Abre em **http://localhost:5005**. Clique numa **sugestão** ou
+escreva sua pergunta.
 
-## 💼 Valor para o portfólio
-Demonstra IA aplicada a dados com **segurança** (validação de SQL, *read-only*),
-*grounding* no schema real e geração de visualização — caso de uso corporativo
-muito forte (self-service analytics).
+> **Modo IA (opcional):** defina `ANTHROPIC_API_KEY` antes de abrir para liberar
+> perguntas livres respondidas pelo Claude. Sem a chave, o app usa o motor de
+> regras (cobre as perguntas mais comuns) — e tudo continua funcionando.
 
-## ✨ Funcionalidades (MVP)
-- Conectar a um banco e ler o schema; perguntar em linguagem natural.
-- Gerar SQL com a Claude, validar (apenas SELECT) e executar.
-- Mostrar tabela + gráfico sugerido + explicação do que foi consultado.
+## ✨ O que faz
+- **NL→SQL**: converte a pergunta em uma query SQL (Claude se houver chave; senão
+  regras determinísticas para faturamento, por mês/região/categoria, top
+  produtos, melhores clientes, ticket médio, contagens…).
+- **Execução segura**: bloqueia qualquer coisa que não seja um único `SELECT`
+  (sem `INSERT/UPDATE/DELETE/DROP/...` e sem múltiplas instruções).
+- **Resultado**: mostra **o SQL gerado**, a fonte (IA/Regras) e a **tabela**.
+- **Sugestões** clicáveis e **esquema do banco** à mão.
 
 ## 🧱 Arquitetura
-- `db` (conexão + introspecção de schema), `nl2sql` (prompt + validação),
-  `viz` (escolha de gráfico), `app` (chat/console). Guardrails de segurança.
+```
+text-to-sql-analyst/
+├── app.py                 # rotas Flask (/, /perguntar)
+├── src/t2sql/
+│   ├── database.py        # SQLite em memória + seed de vendas (determinístico)
+│   ├── nl2sql.py          # guarda de segurança + regras + Claude opcional
+│   └── service.py         # gera, valida e executa a query
+├── templates/  static/    # UI (tema escuro)
+└── tests/                 # banco, NL→SQL/segurança e serviço (15 testes)
+```
 
-## 🗺️ Roadmap
-- [ ] MVP: NL→SQL→resultado em um banco de exemplo.
-- [ ] V2: memória de conversa e correção de erros de SQL automaticamente.
-- [ ] V3: catálogo de métricas e cache de consultas frequentes.
+## 🧪 Testes
+`pytest` — base determinística, mapeamento de perguntas, **bloqueio de SQL
+perigoso** e execução ponta-a-ponta (offline).
 
-## 📚 Notas de IA
-- Modelo padrão: Claude (Anthropic). SQL sempre validado antes de executar.
+## 🗺️ Próximos
+- Gráfico automático para séries temporais e export CSV do resultado.
+- Conectar a um banco real (Postgres) e few-shot por esquema no modo IA.
