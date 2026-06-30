@@ -2,7 +2,7 @@
 
 > Você me deu autonomia para decidir o melhor caminho e pediu para eu **explicar
 > as decisões aqui** para revisarmos depois. Este arquivo é meu "diário de bordo".
-> Última atualização: sessão de 29/06/2026.
+> Última atualização: sessão de 30/06/2026 (13 apps implementados).
 
 ---
 
@@ -236,3 +236,52 @@ SLA/feriados + auditoria), no molde do `controle_coletas`; (2) **Copa ao vivo**
 (API de futebol: resultados, chaveamento, próximos jogos, jogadores).
 
 > Fim da sessão 4.
+
+---
+
+## Sessão 5 — Consertar o Git e "fazer vários, atualizando no Git"
+
+**O que você pediu:** reverter o que eu tinha subido errado (misturei o portfólio
+no seu repo de estudos), criar uma **pasta/repo dedicados**, e seguir construindo
+**vários apps**, atualizando o Git a cada um.
+
+| Decisão | Por quê |
+|---|---|
+| **Repo de estudos restaurado ao original** | Eu havia misturado os apps no `Projetos-Grupo-Desenvolvimento`. Fiz `reset --hard` + push forçado para devolver o repo ao estado certo (recursos_python/sql intactos). |
+| **Pasta + repo novos: `portfolio-dev`** (privado) | Você escolheu o nome. Tudo do portfólio vive aqui agora: https://github.com/DiOliveira011/portfolio-dev |
+| **Um commit por app** | Você pediu "ir atualizando no Git". Cada app entra com seu próprio commit, depois de passar em lint + testes + boot. |
+| **Venvs em caminho curto** | OneDrive estoura o limite de 260 caracteres do Windows ao instalar libs aninhadas (Streamlit/sklearn). Cada `EXECUTAR.bat` cria o ambiente em `%LOCALAPPDATA%\portfolio-venvs\<app>`. |
+
+**Apps construídos nesta sessão (todos verificados: ruff + pytest + boot HTTP 200):**
+
+| App | Stack | O que entrega |
+|---|---|---|
+| `gestao-entregas` | Flask | Gestão **real** de entregas (no molde do seu `controle_coletas`): CRUD, **baixa com conferente**, **SLA em dias úteis com feriados BR**, status automático (Atrasado), KPIs e **auditoria**. Porta 5001. |
+| `rpg-character-forge` | Flask | Fichas de **D&D 5e**: forjar/aleatório (4d6), cálculos completos, salvar e **ficha imprimível (PDF)**. Porta 5002. |
+| `nfe-invoice-extractor` | Flask | Lê **NF-e (XML)**, extrai emitente/itens/totais, **valida** e exporta CSV. Porta 5003. |
+| `ml-model-api-template` | FastAPI | Base **MLOps**: treina, serve `/predict` + `/health`, **Swagger /docs** e **Docker**. Porta 8000. |
+| `churn-predictor` | Flask + sklearn | **Case** de evasão: base fictícia + RandomForest + **painel de risco** + simulador. Porta 5004. |
+| `text-to-sql-analyst` | Flask | Pergunte ao banco **em português** → gera **SQL**, executa com guarda **SELECT-only**. Porta 5005. |
+| `sales-bi-autoinsights` | Flask | BI que **escreve os próprios achados** a partir de dados embutidos. Porta 5006. |
+
+**Decisão importante — "modo IA opcional":** em `text-to-sql-analyst` adotei o
+padrão de **funcionar offline** (motor de regras) e **usar o Claude
+automaticamente** se existir `ANTHROPIC_API_KEY`. Assim o app é útil e
+**testável sem depender de chave**. Vou reusar esse padrão nos próximos de IA.
+
+**Preferência sua reforçada (e seguida):** "app pronto/case", **não** "importe um
+CSV e veja". Por isso `churn-predictor` e `sales-bi-autoinsights` já vêm com dados
+realistas carregados e funcionalidades completas.
+
+**Por que parei aqui (checkpoint):** os 4 que faltam têm uma **dependência real**:
+- `rag-knowledge-assistant`, `ai-dungeon-master`, `doc-intelligence` → o valor está
+  num **LLM** (Claude). Dá para entregar com o padrão "offline + Claude opcional",
+  mas a parte de IA só brilha com `ANTHROPIC_API_KEY`.
+- `mtg-card-vision` → reconhecer carta por foto **offline** é difícil (precisa de
+  hashing perceptual contra base de imagens). O `mtg-deck-lab` já tem câmera +
+  fallback por nome, então este é o de menor prioridade.
+
+**Próximo passo proposto:** `rag-knowledge-assistant` com **recuperação offline
+(TF-IDF)** + **geração via Claude quando houver chave** — verificável sem chave.
+
+> Fim da sessão 5 (13 apps no ar).
