@@ -15,5 +15,6 @@ start "Invest Analyzer"      "%~dp0invest-portfolio-analyzer\EXECUTAR.bat"
 start "Gestao de Entregas"   "%~dp0gestao-entregas\EXECUTAR.bat"
 start "RPG Character Forge"  "%~dp0rpg-character-forge\EXECUTAR.bat"
 start "NF-e Extractor"       "%~dp0nfe-invoice-extractor\EXECUTAR.bat"
+start "ML Model API"         "%~dp0ml-model-api-template\EXECUTAR.bat"
 echo Pronto. As janelas foram abertas.
 timeout /t 4 >nul

@@ -72,7 +72,7 @@ e abre o app no navegador. Para abrir os quatro de uma vez, use o
 |---|---------|---------|--------|
 | 12 | [rag-knowledge-assistant](./rag-knowledge-assistant) | Chatbot sobre seus documentos (RAG) | IA |
 | 13 | [text-to-sql-analyst](./text-to-sql-analyst) | Pergunte em PT, ele consulta o banco | IA · Data |
-| 14 | [ml-model-api-template](./ml-model-api-template) | Modelo + FastAPI + Docker (base MLOps) | IA · Dev |
+| 14 | [ml-model-api-template](./ml-model-api-template) ✅ | **(FastAPI)** modelo + `/predict` + Docker (base MLOps) | IA · Dev |
 | 15 | [doc-intelligence](./doc-intelligence) | **(por último)** Lê PDF/Excel e resume com IA | IA · Data |
 
 ### 🧊 Backlog (depois)
@@ -88,9 +88,11 @@ fictícia de eventos & locação** (FestPro), já cheio de dados realistas e com
 dezenas de KPIs. **Não é "importe um CSV"** — abre e usa, como software de verdade.
 
 ## ✅ Progresso
-**9 apps implementados e verificados** (lint + testes + boot):
+**10 apps implementados e verificados** (lint + testes + boot):
 - 🃏 `mtg-deck-lab` — **(Flask)** analisador de Commander: lista/link, brackets,
   curva, preço, **câmera no celular**.
+- 🤖 `ml-model-api-template` — **(FastAPI)** treina e serve um modelo (/predict,
+  /docs Swagger, Docker) — base de MLOps reutilizável.
 - 🧾 `nfe-invoice-extractor` — **(Flask)** lê NF-e (XML), valida e exporta itens em CSV.
 - ⚔️ `rpg-character-forge` — **(Flask)** fichas de D&D 5e (forjar/aleatório, imprimível).
 - 🚚 `gestao-entregas` — **(Flask)** gestão operacional de entregas (cadastro,
