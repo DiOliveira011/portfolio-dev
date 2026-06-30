@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block title %}{{ title }} — Gestão de Entregas{% endblock %}
+{% block content %}
+<h1>{{ title }}</h1>
+<form class="card form" method="post">
+  <div class="grid2">
+    <div>
+      <label>Cliente</label>
+      <input type="text" name="cliente" required value="{{ rec.cliente if rec else '' }}">
+    </div>
+    <div>
+      <label>Local / praça</label>
+      <input type="text" name="local" required value="{{ rec.local if rec else '' }}">
+    </div>
+    <div>
+      <label>Responsável</label>
+      <select name="responsavel">
+        {% for r in responsaveis %}
+        <option value="{{ r }}" {{ 'selected' if rec and rec.responsavel == r }}>{{ r }}</option>{% endfor %}
+      </select>
+    </div>
+    <div>
+      <label>Data agendada</label>
+      <input type="date" name="data_agendada" required value="{{ rec.data_agendada if rec else '' }}">
+    </div>
+    <div>
+      <label>SLA (dias úteis)</label>
+      <input type="number" name="sla_dias" min="0" max="30" value="{{ rec.sla_dias if rec else 2 }}">
+    </div>
+    <div>
+      <label>Valor (R$)</label>
+      <input type="number" name="valor" step="0.01" min="0" value="{{ rec.valor if rec else '' }}">
+    </div>
+    {% if rec %}
+    <div>
+      <label>Status</label>
+      <select name="status">
+        {% for s in statuses %}
+        <option value="{{ s }}" {{ 'selected' if rec.status == s }}>{{ s }}</option>{% endfor %}
+      </select>
+    </div>
+    {% endif %}
+  </div>
+  <label>Observações</label>
+  <textarea name="observacoes" rows="3">{{ rec.observacoes if rec else '' }}</textarea>
+
+  {% if rec %}
+  <p class="muted audit">
+    Criado por {{ rec.criado_por }} em {{ rec.criado_em }}
+    {% if rec.editado_em %} · editado por {{ rec.editado_por }} em {{ rec.editado_em }}{% endif %}
+    {% if rec.prazo_br %} · prazo {{ rec.prazo_br }}{% endif %}
+  </p>
+  {% endif %}
+
+  <div class="form-actions">
+    <button class="btn" type="submit">Salvar</button>
+    <a class="btn ghost" href="{{ url_for('index') }}">Cancelar</a>
+  </div>
+</form>
+{% endblock %}

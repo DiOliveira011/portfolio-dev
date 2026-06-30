@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% block content %}
+
+<section class="kpis">
+  <div class="kpi"><b>{{ kpis.total }}</b><span>entregas</span></div>
+  <div class="kpi"><b>{{ kpis.pendentes }}</b><span>pendentes</span></div>
+  <div class="kpi"><b>{{ kpis.em_rota }}</b><span>em rota</span></div>
+  <div class="kpi ok"><b>{{ kpis.entregues }}</b><span>entregues</span></div>
+  <div class="kpi bad"><b>{{ kpis.atrasadas }}</b><span>atrasadas</span></div>
+  <div class="kpi"><b>{{ "%.0f"|format(kpis.no_prazo_pct * 100) }}%</b><span>no prazo</span></div>
+  <div class="kpi"><b>R$ {{ "{:,.0f}".format(kpis.valor_aberto).replace(",", ".") }}</b><span>em aberto</span></div>
+</section>
+
+<form class="filters" method="get">
+  <input type="text" name="q" value="{{ f.q }}" placeholder="🔎 cliente ou local">
+  <select name="status">
+    <option value="">Todos os status</option>
+    {% for s in status_list %}
+    <option value="{{ s }}" {{ 'selected' if f.status == s }}>{{ s }}</option>{% endfor %}
+  </select>
+  <select name="responsavel">
+    <option value="">Todos responsáveis</option>
+    {% for r in responsaveis %}
+    <option value="{{ r }}" {{ 'selected' if f.responsavel == r }}>{{ r }}</option>{% endfor %}
+  </select>
+  <button class="btn ghost" type="submit">Filtrar</button>
+  <a class="btn ghost" href="{{ url_for('index') }}">Limpar</a>
+</form>
+
+<div class="table-wrap">
+<table class="grid">
+  <thead><tr>
+    <th>Cliente</th><th>Local</th><th>Responsável</th><th>Agendada</th>
+    <th>Prazo (SLA)</th><th>Status</th><th class="r">Valor</th><th>Conferente</th><th>Ações</th>
+  </tr></thead>
+  <tbody>
+  {% for e in rows %}
+  <tr class="{{ 'late' if e.atrasado }}">
+    <td><b>{{ e.cliente }}</b></td>
+    <td>{{ e.local }}</td>
+    <td>{{ e.responsavel }}</td>
+    <td>{{ e.data_br }}</td>
+    <td>{{ e.prazo_br }}</td>
+    <td><span class="badge st-{{ e.status_efetivo|replace(' ','') }}">{{ e.status_efetivo }}</span></td>
+    <td class="r">R$ {{ "{:,.0f}".format(e.valor).replace(",", ".") }}</td>
+    <td>{{ e.conferente or "—" }}</td>
+    <td class="actions">
+      <a class="link" href="{{ url_for('editar', entrega_id=e.id) }}">editar</a>
+      {% if e.status_efetivo != "Entregue" %}
+      <details class="baixa">
+        <summary>baixa</summary>
+        <form method="post" action="{{ url_for('dar_baixa', entrega_id=e.id) }}">
+          <input type="text" name="conferente" placeholder="Quem recebeu?" required>
+          <button class="btn small" type="submit">✓ Dar baixa</button>
+        </form>
+      </details>
+      {% endif %}
+      <form method="post" action="{{ url_for('excluir', entrega_id=e.id) }}"
+            onsubmit="return confirm('Excluir esta entrega?')">
+        <button class="link danger" type="submit">excluir</button>
+      </form>
+    </td>
+  </tr>
+  {% else %}
+  <tr><td colspan="9" class="empty">Nenhuma entrega encontrada.</td></tr>
+  {% endfor %}
+  </tbody>
+</table>
+</div>
+{% endblock %}

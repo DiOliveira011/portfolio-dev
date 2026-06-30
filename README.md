@@ -64,7 +64,8 @@ e abre o app no navegador. Para abrir os quatro de uma vez, use o
 ### 🚚 Empresarial / Logística
 | # | Projeto | O que é | Skills |
 |---|---------|---------|--------|
-| 11 | [logistics-control](./logistics-control) ✅ | Controle de rotas/veículos/entregas (inspirado em RF Festas/TMS) | Dev · Data |
+| 11 | [logistics-control](./logistics-control) ✅ | Planejamento de rotas/frota + BI (Streamlit) | Dev · Data |
+| 11b | [gestao-entregas](./gestao-entregas) ✅ | **(Flask)** gestão operacional: cadastro, **baixa c/ conferente**, SLA com feriados, auditoria | Dev |
 
 ### 🤖 Engenharia de IA
 | # | Projeto | O que é | Skills |
@@ -87,9 +88,11 @@ fictícia de eventos & locação** (FestPro), já cheio de dados realistas e com
 dezenas de KPIs. **Não é "importe um CSV"** — abre e usa, como software de verdade.
 
 ## ✅ Progresso
-**6 apps implementados e verificados** (lint + testes + boot):
+**7 apps implementados e verificados** (lint + testes + boot):
 - 🃏 `mtg-deck-lab` — **(Flask)** analisador de Commander: lista/link, brackets,
   curva, preço, **câmera no celular**.
+- 🚚 `gestao-entregas` — **(Flask)** gestão operacional de entregas (cadastro,
+  baixa com conferente, SLA com feriados, auditoria).
 - ⭐ `festpro-suite` — painel completo de empresa fictícia (6 telas, KPIs, BI).
 - ✅ `finance-dashboard` — importa extrato, categoriza com regras+ML, dashboard.
 - ✅ `worldcup-predictor` — Elo/Poisson + simulação de Monte Carlo do torneio.
