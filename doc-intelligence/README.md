@@ -1,52 +1,48 @@
-# 🧠 Doc Intelligence  *(projeto final — #15)*
+# 📄 Doc Intelligence (Flask)  ✅
 
-> Você joga um **PDF ou Excel** e recebe: um **resumo do conteúdo**, os
-> **principais resultados/insights**, e **informações técnicas** sobre o arquivo
-> e sobre os dados. Tudo com uma **IA acoplada**.
+> Leia e **resuma qualquer documento**: cole texto ou envie **.txt, .md, .csv,
+> .pdf, .xlsx**. O app extrai **estatísticas** (palavras, frases, tempo de
+> leitura), **palavras-chave** e gera um **resumo** — com **IA (Groq grátis ou
+> Claude)** ou um **resumo extrativo offline**. Processamento local.
 
-**Categoria:** Engenharia de IA + Ciência de Dados · **Skills:** IA (LLM) · Data
-**Stack sugerida:** Python · API da Claude · pandas · openpyxl · pdfplumber/PyMuPDF · Streamlit
+**Skills:** Engenharia de IA · NLP/extração de documentos · Flask
+**Stack:** Python 3.12 · Flask · pypdf · openpyxl · IA via **Groq/Claude** (urllib)
 
-## 🎯 Objetivo
-Uma ferramenta de **inteligência documental** que lê arquivos heterogêneos e
-gera um relatório automático, combinando **análise determinística** (estatística
-dos dados) com **interpretação por IA** (resumo e conclusões em linguagem
-natural). É a síntese de quase tudo do portfólio.
+## 🤖 IA opcional (Groq grátis, Claude, ou offline)
+Defina `GROQ_API_KEY` (gratuito, https://console.groq.com) **ou**
+`ANTHROPIC_API_KEY` para o resumo gerado por IA. Sem chave, o app entrega um
+**resumo extrativo** (as frases mais relevantes) + palavras-chave.
 
-## 💼 Valor para o portfólio
-Projeto "vitrine": une parsing de documentos, análise de dados e LLM num produto
-que qualquer empresa entende o valor (ganho de tempo na leitura de relatórios,
-planilhas e documentos). Fecha a trilha Dev → Data → IA.
+## 🏁 Como executar
+**Duplo clique em `EXECUTAR.bat`** ou `pip install -r requirements-dev.txt` +
+`python app.py`. Abre em **http://localhost:5009**. Clique em **"Usar exemplo"**
+para testar na hora.
 
-## ✨ Funcionalidades (MVP)
-- **Excel/CSV:** perfil dos dados (linhas, colunas, tipos, nulos, estatísticas),
-  detecção de tabelas, KPIs e gráficos automáticos.
-- **PDF:** extração de texto/tabelas e metadados do arquivo.
-- **Resumo por IA:** a Claude recebe a análise estruturada + amostras e produz:
-  resumo executivo, principais resultados, achados/anomalias e próximos passos.
-- **Ficha técnica:** infos do arquivo (tamanho, páginas/abas, encoding) e dos
-  dados (schema, qualidade, intervalos).
-- Exportar o relatório (Markdown/PDF).
+## ✨ O que faz
+- **Lê** texto colado ou arquivos **.txt/.md/.csv/.pdf/.xlsx** (CSV/Excel também
+  mostram linhas × colunas e cabeçalho).
+- **Estatísticas**: palavras, frases, palavras únicas, tempo de leitura.
+- **Palavras-chave** por frequência (sem stopwords).
+- **Resumo**: com IA (título + resumo + pontos-chave) ou **extrativo** offline.
 
 ## 🧱 Arquitetura
-- `readers/` (excel, csv, pdf → representação comum), `analysis/` (perfil +
-  estatística + gráficos), `ai/` (monta o contexto e chama a Claude com
-  *tool/JSON output*), `report/` (montagem + export), `app/` (Streamlit).
-- Reaproveita o motor de **RAG** (#12) para documentos longos e o
-  **profiling** do **sales-bi-autoinsights** (#10).
+```
+doc-intelligence/
+├── app.py                 # rota Flask (/, /analisar)
+├── src/docintel/
+│   ├── extract.py         # texto/CSV/PDF/Excel → texto + metadados de tabela
+│   ├── analyze.py         # estatísticas, palavras-chave, resumo extrativo
+│   ├── llm.py             # Groq / Claude / offline (via urllib)
+│   ├── service.py         # análise + resumo (IA ou extrativo)
+│   └── sample.py          # documento de exemplo
+├── templates/  static/    # UI (tema documento)
+└── tests/                 # extração, análise e serviço (12 testes)
+```
 
-## 🗺️ Roadmap
-- [ ] MVP: Excel/CSV → análise + resumo por IA + ficha técnica.
-- [ ] V2: PDF (texto/tabelas) e perguntas livres sobre o arquivo (chat).
-- [ ] V3: lote de arquivos, comparação entre versões e templates de relatório.
+## 🧪 Testes
+`pytest` — extração de TXT/CSV (e aviso em PDF inválido), estatísticas,
+palavras-chave, resumo extrativo e serviço no modo offline.
 
-## 🤖 IA — como entra
-A IA **não** "lê o arquivo cru": nós extraímos e resumimos os dados de forma
-estruturada e enviamos esse contexto (schema, estatísticas, amostras, trechos)
-para a Claude gerar a interpretação. Isso mantém a resposta **fundamentada nos
-dados reais** e controla custo/contexto.
-
-## 📚 Notas
-- Modelo padrão: Claude (Anthropic). Requer `ANTHROPIC_API_KEY`.
-- Processa arquivos locais; ideal rodar offline para o parsing e só a etapa de
-  resumo usar a API.
+## 🗺️ Próximos
+- OCR para PDFs escaneados e divisão por seções/capítulos.
+- Perguntas e respostas sobre o documento (RAG por cima do texto extraído).

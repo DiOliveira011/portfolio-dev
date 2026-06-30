@@ -73,7 +73,7 @@ e abre o app no navegador. Para abrir os quatro de uma vez, use o
 | 12 | [rag-knowledge-assistant](./rag-knowledge-assistant) ✅ | **(Flask)** RAG sobre base de empresa (TF-IDF + Groq/Claude/offline) | IA |
 | 13 | [text-to-sql-analyst](./text-to-sql-analyst) ✅ | **(Flask)** pergunte em PT → gera SQL, executa (regras + Claude opcional) | IA · Data |
 | 14 | [ml-model-api-template](./ml-model-api-template) ✅ | **(FastAPI)** modelo + `/predict` + Docker (base MLOps) | IA · Dev |
-| 15 | [doc-intelligence](./doc-intelligence) | **(por último)** Lê PDF/Excel e resume com IA | IA · Data |
+| 15 | [doc-intelligence](./doc-intelligence) ✅ | **(Flask)** lê TXT/CSV/PDF/Excel, resume (Groq/Claude/extrativo) | IA · Data |
 
 ### 🧊 Backlog (depois)
 | Projeto | O que é |
@@ -88,9 +88,12 @@ fictícia de eventos & locação** (FestPro), já cheio de dados realistas e com
 dezenas de KPIs. **Não é "importe um CSV"** — abre e usa, como software de verdade.
 
 ## ✅ Progresso
-**15 apps implementados e verificados** (lint + testes + boot):
+**16 de 17 apps implementados e verificados** (lint + testes + boot) — só falta o
+`mtg-card-vision` (visão computacional):
 - 🃏 `mtg-deck-lab` — **(Flask)** analisador de Commander: lista/link, brackets,
   curva, preço, **câmera no celular**.
+- 📄 `doc-intelligence` — **(Flask)** lê TXT/CSV/PDF/Excel, extrai estatísticas e
+  resume (Groq/Claude ou extrativo offline).
 - 📚 `rag-knowledge-assistant` — **(Flask)** RAG sobre a base de uma empresa
   fictícia (TF-IDF) com IA opcional **Groq (grátis) / Claude** e modo offline.
 - 🐉 `ai-dungeon-master` — **(Flask)** Mestre de RPG com memória de campanha

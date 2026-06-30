@@ -1,0 +1,5 @@
+# Doc Intelligence (Flask) - runtime (Python 3.12+)
+Flask>=3.0
+pypdf>=4.0          # leitura de PDF
+openpyxl>=3.1       # leitura de Excel (.xlsx)
+# IA opcional: defina GROQ_API_KEY (grátis) ou ANTHROPIC_API_KEY (chamadas via urllib).

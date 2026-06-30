@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="hero">
+  <h1>Leia e <span class="accent">resuma</span> qualquer documento</h1>
+  <p>Cole um texto ou envie um arquivo (<b>.txt, .md, .csv, .pdf, .xlsx</b>). O app
+     extrai estatísticas, palavras-chave e gera um <b>resumo</b> — com IA
+     (Groq/Claude) ou um resumo extrativo offline.</p>
+</section>
+
+<form class="card" method="post" action="{{ url_for('analisar') }}" enctype="multipart/form-data">
+  <label>Arquivo</label>
+  <input type="file" name="arquivo" accept=".txt,.md,.csv,.pdf,.xlsx,.log">
+  <div class="or">— ou cole o texto —</div>
+  <textarea name="texto" rows="7" placeholder="Cole aqui o conteúdo do documento..."></textarea>
+  <div class="actions">
+    <button class="btn" type="submit">🔎 Analisar</button>
+    <button class="btn ghost" type="submit" name="exemplo" value="1">Usar exemplo</button>
+  </div>
+</form>
+
+{% if result %}
+  {% if result.warning %}<div class="alert">⚠ {{ result.warning }}</div>{% endif %}
+
+  {% if result.analise %}
+  <div class="grid2">
+    <div class="card summary">
+      <div class="card-head"><h3>Resumo</h3>
+        <span class="src">via {{ result.resumo.provider }}</span></div>
+      <p class="sumtext">{{ result.resumo.summary }}</p>
+      {% if result.resumo.bullets %}
+      <div class="chips">{% for b in result.resumo.bullets %}<span class="chip">{{ b }}</span>{% endfor %}</div>
+      {% endif %}
+    </div>
+
+    <div class="card">
+      <h3>Estatísticas <small>({{ result.kind }})</small></h3>
+      <div class="stats">
+        <div><b>{{ result.analise.stats.palavras }}</b><span>palavras</span></div>
+        <div><b>{{ result.analise.stats.frases }}</b><span>frases</span></div>
+        <div><b>{{ result.analise.stats.palavras_unicas }}</b><span>únicas</span></div>
+        <div><b>{{ result.analise.stats.tempo_leitura_min }}'</b><span>leitura</span></div>
+      </div>
+      {% if result.table %}
+      <p class="muted small">Tabela: {{ result.table.linhas }} linhas ×
+         {{ result.table.colunas }} colunas — {{ result.table.cabecalho|join(", ") }}</p>
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Palavras-chave</h3>
+    <div class="chips">
+      {% for word, count in result.analise.keywords %}
+      <span class="chip">{{ word }} <i>{{ count }}</i></span>
+      {% endfor %}
+    </div>
+  </div>
+
+  {% if result.resumo.mode != 'ia' %}
+  <details class="card"><summary>Trechos mais relevantes (resumo extrativo)</summary>
+    <p>{{ result.analise.extractive }}</p>
+  </details>
+  {% endif %}
+  {% endif %}
+{% endif %}
+{% endblock %}

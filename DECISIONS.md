@@ -2,7 +2,7 @@
 
 > Você me deu autonomia para decidir o melhor caminho e pediu para eu **explicar
 > as decisões aqui** para revisarmos depois. Este arquivo é meu "diário de bordo".
-> Última atualização: sessão de 30/06/2026 (13 apps implementados).
+> Última atualização: sessão de 30/06/2026 (16 de 17 apps implementados).
 
 ---
 
@@ -285,3 +285,35 @@ realistas carregados e funcionalidades completas.
 (TF-IDF)** + **geração via Claude quando houver chave** — verificável sem chave.
 
 > Fim da sessão 5 (13 apps no ar).
+
+---
+
+## Sessão 6 — Os 3 apps de IA (Groq grátis + Claude + offline)
+
+**O que você pediu:** construir os 3 de IA com "**offline + Claude opcional**" e
+**também Groq, por ser gratuito**, como outra opção.
+
+| Decisão | Por quê |
+|---|---|
+| **Camada LLM única: Groq + Claude + offline** | Cada app de IA tem um `llm.py` que detecta `GROQ_API_KEY` (grátis) ou `ANTHROPIC_API_KEY`. Sem chave → modo offline. Com as duas, `LLM_PROVIDER` decide. |
+| **Chamadas via `urllib` (stdlib), sem SDK** | Não instala `anthropic`/`groq`/`openai`. Menos dependência, mais portável, e **offline-safe**: qualquer erro de rede vira `None` e cai no modo offline. |
+| **Claude tem precedência quando ambas as chaves existem** | Qualidade; mas o Groq fica fácil de forçar (`LLM_PROVIDER=groq`) por ser grátis. |
+| **Modelos padrão** | `llama-3.3-70b-versatile` (Groq) e `claude-sonnet-4-6` (Anthropic), ambos sobrescrevíveis por env. |
+
+**Apps construídos (verificados: ruff + pytest + boot; IA testada sem rede via fallback):**
+
+| App | Núcleo verificável offline | Com IA (Groq/Claude) |
+|---|---|---|
+| `rag-knowledge-assistant` (5007) | **Recuperação TF-IDF** (pure-Python) sobre a base de uma empresa fictícia; devolve os trechos. | Responde citando as fontes, usando só o contexto recuperado. |
+| `ai-dungeon-master` (5008) | **Mestre offline**: classifica a ação + **rolagem d20** + flavor do cenário. | Narrativa viva com **memória de campanha** (histórico vira contexto). |
+| `doc-intelligence` (5009) | Lê TXT/CSV/PDF/Excel, estatísticas, palavras-chave e **resumo extrativo**. | Resumo com título + pontos-chave gerado pela IA. |
+
+**Resultado:** **16 de 17 apps** prontos e no Git. Só falta o `mtg-card-vision`
+(reconhecer carta por foto), que depende de visão computacional mais pesada
+(hashing perceptual contra base de imagens) — fica como o último, opcional.
+
+**Como ligar a IA (qualquer um dos 3):** definir `GROQ_API_KEY` (grátis em
+console.groq.com) **ou** `ANTHROPIC_API_KEY` antes de abrir o app. Nada muda no
+código — o badge no topo passa de "Offline" para o provedor ativo.
+
+> Fim da sessão 6 (16 apps no ar; IA com Groq/Claude/offline).
