@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Painel de retenção</h1>
+<p class="muted">Base de {{ kpis.total }} clientes (fictícia, já carregada). Modelo treinado
+   automaticamente para estimar o risco de cancelamento de cada cliente ativo.</p>
+
+<div class="kpis">
+  <div class="kpi"><span>Clientes</span><b>{{ kpis.total }}</b></div>
+  <div class="kpi"><span>Churn na base</span><b>{{ "%.1f"|format(kpis.churn_rate*100) }}%</b></div>
+  <div class="kpi danger"><span>Em risco alto</span><b>{{ kpis.em_risco }}</b></div>
+  <div class="kpi danger"><span>Receita em risco/mês</span><b>R$ {{ "%.0f"|format(kpis.receita_risco) }}</b></div>
+  <div class="kpi"><span>Ticket médio</span><b>R$ {{ "%.2f"|format(kpis.ticket_medio) }}</b></div>
+</div>
+
+<div class="two-col">
+  <div class="card">
+    <h3>O que mais pesa no churn</h3>
+    <ul class="bars">
+      {% for f in importances %}
+      <li>
+        <span class="lbl">{{ f.feature }}</span>
+        <span class="bar"><i style="width: {{ (f.peso / max_peso * 100)|round(0, 'floor') }}%"></i></span>
+        <span class="val">{{ "%.0f"|format(f.peso*100) }}%</span>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+  <div class="card">
+    <h3>Qualidade do modelo</h3>
+    <div class="metrics">
+      <div><b>{{ metrics.roc_auc }}</b><span>ROC AUC</span></div>
+      <div><b>{{ "%.0f"|format(metrics.accuracy*100) }}%</b><span>Acurácia</span></div>
+      <div><b>{{ metrics.n_treino }}</b><span>Treino</span></div>
+      <div><b>{{ metrics.n_teste }}</b><span>Teste</span></div>
+    </div>
+    <p class="muted small">ROC AUC mede o quão bem o modelo separa quem cancela de quem fica
+       (0,5 = chute; 1,0 = perfeito).</p>
+  </div>
+</div>
+
+<div class="card">
+  <h3>Clientes ativos com maior risco</h3>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>ID</th><th>Cliente</th><th>Plano</th><th>Contrato</th>
+        <th class="r">Tempo</th><th class="r">Mensal.</th><th class="r">Risco</th></tr></thead>
+      <tbody>
+        {% for c in top %}
+        <tr>
+          <td class="mono">{{ c.id }}</td><td>{{ c.nome }}</td>
+          <td>{{ c.plano }}</td><td>{{ c.contrato }}</td>
+          <td class="r">{{ c.tenure_meses }} m</td>
+          <td class="r">R$ {{ "%.2f"|format(c.mensalidade) }}</td>
+          <td class="r">
+            <span class="risk {{ 'alto' if c.banda=='Alto' else 'medio' if c.banda=='Médio' else 'baixo' }}">
+              {{ "%.0f"|format(c.risco*100) }}%
+            </span>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

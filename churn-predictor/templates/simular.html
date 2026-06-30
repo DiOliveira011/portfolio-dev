@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Simular risco de um cliente</h1>
+<p class="muted">Ajuste o perfil e veja a probabilidade estimada de cancelamento.</p>
+
+<div class="two-col">
+  <form class="card" method="post">
+    <div class="grid">
+      <div>
+        <label>Contrato</label>
+        <select name="contrato">
+          {% for ct in contratos %}
+          <option value="{{ ct }}" {{ 'selected' if ct==form.contrato }}>{{ ct }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div>
+        <label>Tempo de casa (meses)</label>
+        <input type="number" name="tenure_meses" min="0" max="120" value="{{ form.tenure_meses }}">
+      </div>
+      <div>
+        <label>Mensalidade (R$)</label>
+        <input type="number" step="0.01" name="mensalidade" value="{{ form.mensalidade }}">
+      </div>
+      <div>
+        <label>Chamados ao suporte</label>
+        <input type="number" name="suporte_chamados" min="0" max="50" value="{{ form.suporte_chamados }}">
+      </div>
+      <div>
+        <label>Uso de dados (GB)</label>
+        <input type="number" step="0.1" name="uso_gb" value="{{ form.uso_gb }}">
+      </div>
+      <div class="check">
+        <label><input type="checkbox" name="atraso_pagamento" value="1"
+          {{ 'checked' if form.atraso_pagamento }}> Tem atraso de pagamento</label>
+      </div>
+    </div>
+    <button class="btn" type="submit">Calcular risco</button>
+  </form>
+
+  <div class="card result">
+    {% if resultado %}
+      <div class="gauge {{ 'alto' if resultado.banda=='Alto' else 'medio' if resultado.banda=='Médio' else 'baixo' }}">
+        <b>{{ "%.0f"|format(resultado.risco*100) }}%</b>
+        <span>risco de churn</span>
+      </div>
+      <p class="band">Classificação: <b>{{ resultado.banda }}</b></p>
+      <p class="muted small">
+        {% if resultado.banda=='Alto' %}Acionar retenção: contato proativo, oferta ou upgrade de contrato.
+        {% elif resultado.banda=='Médio' %}Monitorar: vale uma régua de relacionamento.
+        {% else %}Cliente saudável — manter a boa experiência.{% endif %}
+      </p>
+    {% else %}
+      <p class="muted">Preencha o formulário e clique em <b>Calcular risco</b>.</p>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}
