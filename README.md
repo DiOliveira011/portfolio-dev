@@ -96,8 +96,7 @@ dezenas de KPIs. **Não é "importe um CSV"** — abre e usa, como software de v
 - ✅ `logistics-control` — distribuição B2B: rotas, motorista, combustível, baixa.
 - ✅ `invest-portfolio-analyzer` — risco/retorno + fronteira eficiente.
 
-Próximos: **logística como app de gestão real em Flask** (substituir o Excel,
-no padrão do `controle_coletas`) e **Copa ao vivo** (API de futebol).
+
 
 ## 🛠️ Convenções
 - **Python 3.12+**, código tipado, testes e `README` por projeto.
