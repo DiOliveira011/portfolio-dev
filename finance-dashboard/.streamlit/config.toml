@@ -1,0 +1,12 @@
+# Varied, friendly theme (indigo + teal accents) — deliberately NOT the
+# black/green "Orc" palette used by the Covil project.
+[theme]
+base = "light"
+primaryColor = "#4f46e5"          # indigo
+backgroundColor = "#f7f8fc"
+secondaryBackgroundColor = "#eef0fb"
+textColor = "#1f2430"
+font = "sans serif"
+
+[server]
+headless = true

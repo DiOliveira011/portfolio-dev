@@ -1,0 +1,33 @@
+# ── Python ────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+env/
+
+# ── Tooling / caches ──────────────────────────────────────
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+
+# ── App runtime data (gerado / privado) ───────────────────
+*/data/cache/
+mtg-deck-lab/data/
+**/*.db
+*.sqlite
+*.sqlite3
+*/.streamlit/secrets.toml
+*/instance/
+
+# ── Build / distribuição ──────────────────────────────────
+build/
+dist/
+*.zip
+
+# ── SO ────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+desktop.ini

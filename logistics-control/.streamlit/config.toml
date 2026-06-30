@@ -1,0 +1,11 @@
+# Logistics theme: blue + amber (high legibility, distinct from other apps).
+[theme]
+base = "light"
+primaryColor = "#2563eb"            # blue
+backgroundColor = "#ffffff"
+secondaryBackgroundColor = "#eef4ff"
+textColor = "#0f172a"
+font = "sans serif"
+
+[server]
+headless = true

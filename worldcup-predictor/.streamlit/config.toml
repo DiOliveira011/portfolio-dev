@@ -1,0 +1,11 @@
+# Sport theme: field green + gold (distinct from other apps).
+[theme]
+base = "dark"
+primaryColor = "#f5c518"            # gold
+backgroundColor = "#0d2818"          # deep field green
+secondaryBackgroundColor = "#13351f"
+textColor = "#eaf3ec"
+font = "sans serif"
+
+[server]
+headless = true

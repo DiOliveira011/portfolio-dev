@@ -1,0 +1,25 @@
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+*.egg-info/
+build/
+dist/
+
+# Runtime data (user financial data is private)
+data/*.db
+*.sqlite
+*.sqlite3
+uploads/
+.streamlit/secrets.toml
+
+# Tooling
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+
+# OS
+Thumbs.db
+.DS_Store
+desktop.ini

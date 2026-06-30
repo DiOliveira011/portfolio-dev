@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="hero">
+  <h1>Analise seu deck de <span class="accent">Commander</span></h1>
+  <p>Cole a <strong>lista em txt</strong> ou um <strong>link da LigaMagic</strong> e veja
+     bracket de poder, curva de mana, tipos e o preço — com as cartas e imagens.</p>
+</section>
+
+{% if error %}<div class="alert">{{ error }}</div>{% endif %}
+
+<form class="card" method="post" action="{{ url_for('analyze_route') }}">
+  <label>Nome do deck (opcional)</label>
+  <input type="text" name="name" placeholder="Ex.: Atraxa Superfriends">
+
+  <label>Lista do deck (1 carta por linha)</label>
+  <textarea name="decklist" rows="10" placeholder="1 Atraxa, Praetors' Voice&#10;1 Sol Ring&#10;1 Arcane Signet&#10;..."></textarea>
+
+  <div class="or">— ou —</div>
+
+  <label>Link da LigaMagic (ou outro site de deck)</label>
+  <input type="url" name="url" placeholder="https://www.ligamagic.com.br/...">
+
+  <button class="btn" type="submit">⚡ Analisar deck</button>
+</form>
+
+<p class="hint">Dica: no Moxfield/Archidekt use “Export” → copie a lista e cole acima.
+   Formatos aceitos: <code>1 Carta</code>, <code>1x Carta</code>,
+   <code>1 Carta (SET) 123</code>, comandante com <code>*CMDR*</code>.</p>
+{% endblock %}

@@ -1,0 +1,20 @@
+[project]
+name = "festpro-suite"
+version = "1.0.0"
+description = "Complete management dashboard for a fictional events & rental company (FestPro)."
+requires-python = ">=3.12"
+dependencies = ["streamlit>=1.33", "pandas>=2.2", "numpy>=1.26", "plotly>=5.20"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "N", "UP", "B", "C4", "SIM"]
+ignore = ["UP042"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+addopts = "-ra -q"

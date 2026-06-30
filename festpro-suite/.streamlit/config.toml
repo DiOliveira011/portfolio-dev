@@ -1,0 +1,11 @@
+# FestPro brand: violet + amber (distinct from the other apps).
+[theme]
+base = "light"
+primaryColor = "#7c3aed"            # violet
+backgroundColor = "#faf9ff"
+secondaryBackgroundColor = "#f1ecff"
+textColor = "#1e1b2e"
+font = "sans serif"
+
+[server]
+headless = true

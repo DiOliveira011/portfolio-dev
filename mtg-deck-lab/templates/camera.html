@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}Câmera — MTG Deck Lab{% endblock %}
+{% block content %}
+<h1>📷 Identificar carta pela câmera</h1>
+<p class="muted">Aponte a câmera para a carta e toque em <b>Capturar</b>.
+   No celular, abra pelo endereço <code>http://SEU-IP:5000/camera</code> (mesma Wi-Fi).</p>
+
+<div class="card cam-wrap">
+  <video id="video" autoplay playsinline></video>
+  <div class="cam-actions">
+    <button class="btn" id="start">Ligar câmera</button>
+    <button class="btn" id="capture" disabled>📸 Capturar</button>
+  </div>
+  <canvas id="canvas" hidden></canvas>
+</div>
+
+<div class="card">
+  <label>Não reconheceu? Digite o nome da carta</label>
+  <div class="search-row">
+    <input type="text" id="q" placeholder="Ex.: Sol Ring">
+    <button class="btn small" id="searchBtn">Buscar</button>
+  </div>
+</div>
+
+<div id="result" class="card result" hidden></div>
+{% endblock %}
+{% block scripts %}
+<script src="{{ url_for('static', filename='camera.js') }}"></script>
+{% endblock %}

@@ -1,0 +1,11 @@
+# Markets theme: dark navy + emerald (distinct from the other apps).
+[theme]
+base = "dark"
+primaryColor = "#10b981"            # emerald
+backgroundColor = "#0b1220"          # deep navy
+secondaryBackgroundColor = "#121c2e"
+textColor = "#e5edf7"
+font = "sans serif"
+
+[server]
+headless = true

@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}MTG Deck Lab{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="{{ url_for('index') }}">🃏 MTG Deck Lab</a>
+    <nav>
+      <a href="{{ url_for('index') }}">Analisar</a>
+      <a href="{{ url_for('decks_route') }}">Meus decks</a>
+      <a href="{{ url_for('camera_route') }}">📷 Câmera</a>
+    </nav>
+  </header>
+  <main class="container">
+    {% block content %}{% endblock %}
+  </main>
+  <footer class="foot">
+    Commander • dados via Scryfall • preço estimado em R$ (USD×câmbio).
+  </footer>
+  {% block scripts %}{% endblock %}
+</body>
+</html>

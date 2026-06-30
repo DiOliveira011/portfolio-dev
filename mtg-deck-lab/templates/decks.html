@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}Meus decks — MTG Deck Lab{% endblock %}
+{% block content %}
+<h1>Meus decks</h1>
+{% if not decks %}
+  <p class="muted">Nenhum deck salvo ainda. <a href="{{ url_for('index') }}">Analise e salve um!</a></p>
+{% else %}
+<div class="deck-list">
+  {% for d in decks %}
+  <a class="card deck-item" href="{{ url_for('deck_route', deck_id=d.id) }}">
+    <div class="bracket mini-bracket bracket-{{ d.summary.bracket }}">{{ d.summary.bracket }}</div>
+    <div class="grow">
+      <h3>{{ d.name }}</h3>
+      <span class="muted">
+        {{ d.summary.commander or "—" }} ·
+        {{ d.summary.total }} cartas ·
+        {{ d.summary.colors|join("") or "C" }} ·
+        R$ {{ "%.0f"|format(d.summary.price_brl) }}
+      </span>
+    </div>
+    <span class="bracket-name">{{ d.summary.bracket_name }}</span>
+  </a>
+  {% endfor %}
+</div>
+{% endif %}
+{% endblock %}

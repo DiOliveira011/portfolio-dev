@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+{% block title %}{{ deck_name or "Deck" }} — MTG Deck Lab{% endblock %}
+{% block content %}
+
+<div class="deck-head">
+  <div>
+    <h1>{{ deck_name or "Análise do deck" }}</h1>
+    <div class="pips">
+      {% for c in a.color_identity %}<span class="pip pip-{{ c }}">{{ c }}</span>{% endfor %}
+      {% if not a.color_identity %}<span class="pip pip-C">C</span>{% endif %}
+    </div>
+  </div>
+  <div class="bracket bracket-{{ a.bracket }}">
+    <div class="bracket-num">{{ a.bracket }}</div>
+    <div class="bracket-name">{{ a.bracket_name }}</div>
+  </div>
+</div>
+
+<section class="grid-2">
+  {% if a.commander %}
+  <div class="card commander">
+    <img loading="lazy" src="{{ a.commander.image }}" alt="{{ a.commander.name }}">
+    <div><span class="muted">Comandante</span><h3>{{ a.commander.name }}</h3></div>
+  </div>
+  {% endif %}
+
+  <div class="card kpis">
+    <div class="kpi"><b>{{ a.total }}</b><span>cartas</span></div>
+    <div class="kpi"><b>{{ a.lands }}</b><span>terrenos</span></div>
+    <div class="kpi"><b>{{ "%.2f"|format(a.avg_cmc) }}</b><span>CMC médio</span></div>
+    <div class="kpi"><b>{{ a.game_changers|length }}</b><span>Game Changers</span></div>
+    <div class="kpi"><b>${{ "%.0f"|format(a.price_usd) }}</b><span>USD</span></div>
+    <div class="kpi"><b>R$ {{ "%.0f"|format(a.price_brl) }}</b><span>estimado</span></div>
+  </div>
+</section>
+
+<section class="card">
+  <h3>🎚️ Bracket estimado: {{ a.bracket }} — {{ a.bracket_name }}</h3>
+  <ul class="reasons">
+    {% for r in a.bracket_reasons %}<li>{{ r }}</li>{% endfor %}
+  </ul>
+  {% if a.game_changers %}
+  <p><b>Game Changers no deck:</b> {{ a.game_changers|join(", ") }}</p>{% endif %}
+  {% if a.mass_land_denial %}
+  <p class="warn"><b>Mass land denial:</b> {{ a.mass_land_denial|join(", ") }}</p>{% endif %}
+</section>
+
+<section class="grid-2">
+  <div class="card">
+    <h3>📈 Curva de mana</h3>
+    {% set maxc = (a.mana_curve.values()|list|max) or 1 %}
+    <div class="curve">
+      {% for bucket, count in a.mana_curve.items() %}
+      <div class="curve-col">
+        <div class="curve-bar" style="height: {{ (count / maxc * 100)|round(0, 'floor') }}%"></div>
+        <div class="curve-n">{{ count }}</div>
+        <div class="curve-x">{{ bucket }}</div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+  <div class="card">
+    <h3>🧩 Tipos</h3>
+    <table class="types">
+      {% for kind, n in a.type_counts.items() %}
+      <tr><td>{{ kind }}</td><td class="r">{{ n }}</td></tr>
+      {% endfor %}
+    </table>
+    <p class="muted">Tutores: {{ a.tutors }} · Turnos extra: {{ a.extra_turns }}</p>
+  </div>
+</section>
+
+<section class="card">
+  <div class="row-between">
+    <h3>🃏 Cartas ({{ a.unique }} diferentes)</h3>
+    <form method="post" action="{{ url_for('save_route') }}" class="save">
+      <input type="hidden" name="decklist" value="{{ decklist_text }}">
+      <input type="text" name="name" value="{{ deck_name }}" placeholder="Nome do deck">
+      <button class="btn small" type="submit">💾 Salvar deck</button>
+    </form>
+  </div>
+  {% if a.missing %}
+  <div class="alert">Não encontradas: {{ a.missing|join(", ") }}</div>{% endif %}
+  <div class="cards-grid">
+    {% for row in rows if row.card %}
+    <a class="mini" href="{{ row.card.scryfall_uri }}" target="_blank" rel="noopener"
+       title="{{ row.card.name }}">
+      <img loading="lazy" src="{{ row.card.image_small or row.card.image }}" alt="{{ row.card.name }}">
+      <span class="qty">{{ row.qty }}x</span>
+      {% if row.card.price_usd %}<span class="price">${{ row.card.price_usd }}</span>{% endif %}
+    </a>
+    {% endfor %}
+  </div>
+</section>
+
+{% if saved_id %}
+<form method="post" action="{{ url_for('delete_route', deck_id=saved_id) }}">
+  <button class="btn danger small" type="submit">Excluir deck salvo</button>
+</form>
+{% endif %}
+{% endblock %}
